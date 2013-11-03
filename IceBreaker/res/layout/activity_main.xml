@@ -27,9 +27,4 @@
         android:text="@string/splash_text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-	<fragment android:name="com.example.icebreaker.profile_view"
-            android:id="@+id/profile_fragment"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
 </RelativeLayout>

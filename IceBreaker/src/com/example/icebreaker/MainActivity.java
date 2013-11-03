@@ -46,8 +46,8 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, providerName + " connected", Toast.LENGTH_LONG).show();
 			
 			//Show profile view
-			Fragment newFragment = new ProfileFragment();
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			//Fragment newFragment = new ProfileFragment();
+			//FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
 			// Replace whatever is in the fragment_container view with this fragment,
 			// and add the transaction to the back stack
@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 			//transaction.addToBackStack(null);
 
 			// Commit the transaction
-			transaction.commit();
+			//transaction.commit();
 			
 			
 			
