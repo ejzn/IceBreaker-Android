@@ -4,5 +4,11 @@
     <string name="app_name">IceBreaker</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="linkedin_btn">Login with LinkedIn</string>
+    <string name="splash_text">The app for professionals looking to connect.</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="nearby_ppl">Nearby People</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_image_description">Profile Picture</string>
 
 </resources>
