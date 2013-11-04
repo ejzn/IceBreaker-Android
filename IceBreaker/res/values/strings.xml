@@ -10,5 +10,6 @@
     <string name="nearby_ppl">Nearby People</string>
     <string name="profile_title">Profile</string>
     <string name="profile_image_description">Profile Picture</string>
+    <string name="messages_title">Messages</string>
 
 </resources>

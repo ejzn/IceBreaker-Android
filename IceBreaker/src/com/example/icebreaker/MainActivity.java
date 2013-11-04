@@ -7,23 +7,72 @@ import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
 import org.brickred.socialauth.android.SocialAuthError;
 import org.brickred.socialauth.android.SocialAuthListener;
 
+import com.example.icebreaker.adapter.TabsPagerAdapter;
+
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener{
+	private ViewPager viewPager;
+    private TabsPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    // Tab titles
+    private String[] tabs = { "Explore", "Profile", "Messages" };
+	
 	SocialAuthAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		// Initilization
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+ 
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
+ 
+        // Adding Tabs
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
+        }
 
+        /**
+         * on swiping the viewpager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+         
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+         
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+         
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+        
+        
+        
 		Button login = (Button) findViewById(R.id.btnLinkedin);
 
 		adapter = new SocialAuthAdapter(new ResponseListener());
@@ -33,6 +82,11 @@ public class MainActivity extends Activity {
 		adapter.enable(login);
 	}
 
+	private void showTabs() {
+		viewPager.setVisibility(View.VISIBLE);
+		findViewById(R.id.btnLinkedin).setVisibility(View.GONE);
+		findViewById(R.id.textView1).setVisibility(View.GONE);
+	}
 	/**
 	 * Listens Response from Library
 	 * 
@@ -45,6 +99,9 @@ public class MainActivity extends Activity {
 			Log.d("OAuth", "Provider Name = " + providerName);
 			Toast.makeText(MainActivity.this, providerName + " connected", Toast.LENGTH_LONG).show();
 			
+			showTabs();
+			
+			
 			//Show profile view
 			//Fragment newFragment = new ProfileFragment();
 			//FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -56,9 +113,6 @@ public class MainActivity extends Activity {
 
 			// Commit the transaction
 			//transaction.commit();
-			
-			
-			
 			adapter.getUserProfileAsync(new ProfileDataListener());
 			
 		}
@@ -116,5 +170,20 @@ public class MainActivity extends Activity {
 			Log.d("ProfileInfo",  "Location                 = " + profileMap.getLocation());
 			Log.d("ProfileInfo",  "Profile Image URL  = " + profileMap.getProfileImageURL());
 		}
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		viewPager.setCurrentItem(tab.getPosition());
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
 	}
 }
